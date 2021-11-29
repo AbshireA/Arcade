@@ -3,11 +3,24 @@ body {
   padding:0px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: cente;
   align-items: center;
+  background: linear-gradient(to right, #304352, #d7d2cc);;
 
 }
 
 canvas {
   box-shadow: black 20px 15px 45px;
+}
+
+h1 {
+  font-size: 60px;
+  letter-spacing: 2rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+button {
+  color: black;
+  font-size: 20px;
 }

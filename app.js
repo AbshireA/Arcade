@@ -8,15 +8,15 @@
 
 
 
-console.log("Connected")
+
 
 const canvas = document.getElementById('field');
 const ctx = canvas.getContext('2d');
 
 let score = 0;
 
-let snakeHeadX = 20;
-let snakeHeadY = 20;
+let snakeHeadX = 10;
+let snakeHeadY = 10;
 const snakePieces = [];
 let tailLength = 2;
 
@@ -49,7 +49,7 @@ function updateGame () { //game loop
   wipeScreen ();
 
   logFoodCollison ();
-
+  
   canvasSnake ();
   canvasFood ();
 
@@ -64,25 +64,40 @@ function updateGame () { //game loop
 function isGameOver() {
   let gameOver= false;
 
+  if (velocityX === 0 && velocityY === 0){
+  return false;
+  }
+
   //walls
   if (snakeHeadX < 0){
     gameOver= true;
   }
 
   else if (snakeHeadX === gridCount) {
-    gameOver  //39.49encounter issue, after adding = sign canvas goes white
+    gameOver = true    //encounter issue, after adding = sign canvas goes white
+  }                     //issue solved, canvas height and width had too much value to grid count 
+
+  else if (snakeHeadY < 0) {
+    gameOver = true;
   }
 
+  else if (snakeHeadY === gridCount) {
+    gameOver = true
+  }
+
+  for (let i = 0; i < snakePieces.length; i++) {
+    let part = snakePieces[i];
+    if (part.x === snakeHeadX && part.y === snakeHeadY) {
+      gameOver = true;
+      break;
+    }
+  }
+
+
+  
   if (gameOver) {
     ctx.fillStyle = 'white';
-    ctx.font = '55px Courier New';
-
-    let gradient = ctx.createLinearGradient (0, 0, canvas.width, 0);
-    gradient.addColorStop('0', " magenta");
-    gradient.addColorStop('0.5', " blue");
-    gradient.addColorStop('1.0', " red");
-    ctx.fillStyle = gradient;
-
+    ctx.font = '30px Courier New';
     ctx.fillText('Better luck next time!', canvas.width / 25, canvas.height / 2);
   }
   
@@ -103,8 +118,6 @@ function wipeScreen() {
 
 function canvasSnake() {
 
- 
-  
   ctx.fillStyle = 'green'
   for (let i = 0; i < snakePieces.length; i++) {
     let part = snakePieces[i];
@@ -119,6 +132,8 @@ function canvasSnake() {
   ctx.fillStyle = 'yellow'
   ctx.fillRect (snakeHeadX * gridCount, snakeHeadY * gridCount, gridSize,gridSize);
 }
+ 
+  
 
 
 function alterSnakePosition() {
